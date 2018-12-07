@@ -59,10 +59,8 @@ public  Bundle bundle ;
 
                     fetchdata process = new fetchdata(adapter,edittext.getText().toString());
                     process.execute();
-
-
                     Toast.makeText(getContext(),edittext.getText().toString(),Toast.LENGTH_LONG).show();
-
+                    edittext.setText("");
 
                 return true;
                 }
@@ -99,7 +97,8 @@ public  Bundle bundle ;
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
-                if(i+i1 == i2 && i2!=0 && etat && edittext.getText().toString().equals(""))
+                if(i+i1 == i2 && i2!=0 && etat
+                         && !bsearch)
 
                 {
 

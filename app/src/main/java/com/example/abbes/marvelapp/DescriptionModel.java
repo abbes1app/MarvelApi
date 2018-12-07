@@ -26,10 +26,11 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class DescriptionModel extends Fragment {
-
+    private  DBHelper db ;
+    boolean aimer = false ;
     TextView text, description ;
     ImageView image;
-    MyRecyclerViewAdapter adapter;
+    MyDescriptionRecycleViewAdapter adapter;
     Button clickcomic , clickserie,favoris ;
     int i ;
     RecyclerView recyclerlist ;
@@ -46,6 +47,9 @@ public class DescriptionModel extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_description_model, container, false);
+
+        db = new DBHelper(getContext());
+
 
         if (getArguments() != null) {
             i = Integer.parseInt(this.getArguments().getString("nom"));
@@ -93,13 +97,46 @@ Toast.makeText(getContext(),String.valueOf(MarvelAdapter.getMdl().size()),Toast.
 
         PicassoClient.downloadImage(getContext(),MarvelAdapter.getMdl().get(i).getUrlImage(),image);
 
-
+        if(db.getData(text.getText().toString())){
+            favoris.setBackgroundResource(R.drawable.coeur_r_icon);
+            aimer = true ;
+        }
 
 
    favoris.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
-        favoris.setBackgroundResource(R.drawable.coeur_r_icon);
+
+
+        if(aimer){
+
+            favoris.setBackgroundResource(R.drawable.coeur_icon);
+
+            if(db.deleteModel(text.getText().toString()) == 1){
+                Toast.makeText(getContext(),"supprimer avec succes",Toast.LENGTH_SHORT).show();
+                aimer = false ;
+            }
+            else{
+                Toast.makeText(getContext(),"erreur lors de la supression",Toast.LENGTH_SHORT).show();
+
+            }
+
+        }
+        else {
+            favoris.setBackgroundResource(R.drawable.coeur_r_icon);
+            if(db.Insertfavoris(text.getText().toString(),MarvelAdapter.getMdl().get(i).getUrlImage())) {
+                Toast.makeText(getContext(),"succes",Toast.LENGTH_SHORT).show();
+                aimer = true ;
+            }
+            else {
+                Toast.makeText(getContext(),"non",Toast.LENGTH_LONG).show();
+            }
+        }
+
+
+
+
+
     }
 });
 
@@ -107,8 +144,8 @@ Toast.makeText(getContext(),String.valueOf(MarvelAdapter.getMdl().size()),Toast.
         clickserie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter = new MyRecyclerViewAdapter(getContext(),serie);
-                runLayoutAnimation(recyclerlist);
+              adapter = new MyDescriptionRecycleViewAdapter(getContext(),serie);
+               runLayoutAnimation(recyclerlist);
             }
         });
 
@@ -116,8 +153,8 @@ Toast.makeText(getContext(),String.valueOf(MarvelAdapter.getMdl().size()),Toast.
         clickcomic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                adapter = new MyRecyclerViewAdapter(getContext(),comic);
-                runLayoutAnimation(recyclerlist);
+              adapter = new MyDescriptionRecycleViewAdapter(getContext(),comic);
+               runLayoutAnimation(recyclerlist);
             }
         });
         return rootview ;

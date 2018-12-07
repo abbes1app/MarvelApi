@@ -5,20 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
 
-public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
+public class MyDescriptionRecycleViewAdapter extends RecyclerView.Adapter<MyDescriptionRecycleViewAdapter.ViewHolder> {
 
-    private List<FavorisItem> mData;
+    private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    MyRecyclerViewAdapter(Context context,List<FavorisItem> data) {
+    MyDescriptionRecycleViewAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -26,16 +25,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mInflater.inflate(R.layout.favoris_row, parent, false);
+        View view = mInflater.inflate(R.layout.recycleview_row, parent, false);
         return new ViewHolder(view);
     }
 
     // binds the data to the TextView in each row
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        String text = mData.get(position).getNom();
+        String text = mData.get(position);
         holder.myTextView.setText(text);
-        PicassoClient.downloadImage(ApplicationContextProvider.getContext(),mData.get(position).getUrlImg(),holder.myImage);
     }
 
     // total number of rows
@@ -48,12 +46,10 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView myTextView;
-        ImageView myImage ;
 
         ViewHolder(View itemView) {
             super(itemView);
-            myTextView = itemView.findViewById(R.id.favoriName);
-            myImage = itemView.findViewById(R.id.favimg);
+            myTextView = itemView.findViewById(R.id.comicName);
             itemView.setOnClickListener(this);
         }
 
@@ -64,13 +60,14 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
             if (mClickListener != null)
             {
                 mClickListener.onItemClick(view, getAdapterPosition());
+                Toast.makeText(ApplicationContextProvider.getContext(),getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
             }
         }
     }
 
     // convenience method for getting data at click position
     String getItem(int id) {
-        return mData.get(id).getNom();
+        return mData.get(id);
     }
 
     // allows clicks events to be caught

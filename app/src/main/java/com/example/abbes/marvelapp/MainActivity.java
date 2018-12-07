@@ -2,6 +2,7 @@ package com.example.abbes.marvelapp;
 
 
 import android.content.pm.ActivityInfo;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         MenuGauche = new ArrayList<>();
         //Add item for sliding list
         MenuGauche.add(new ItemList(R.drawable.marvel,"Accueil" ));
-        MenuGauche.add(new ItemList(R.drawable.marvel,"Horaires"));
+        MenuGauche.add(new ItemList(R.drawable.marvel,"Favoris"));
 
 
         MenuGaucheAdapter  adapter = new MenuGaucheAdapter(this, MenuGauche);
@@ -111,14 +112,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        if (ListMarvel.bsearch) {
-            Toast.makeText(this,"ABbes",Toast.LENGTH_LONG).show();
-            ListMarvel.bsearch = false ;
-            replaceFragment(0);
 
-        } else {
-            finish();
+
+
+        if (ListMarvel.bsearch) {
+            //additional code
+            replaceFragment(0);
+            Toast.makeText(getApplicationContext(),"je clique",Toast.LENGTH_LONG).show();
         }
+        else {
+            super.onBackPressed();
+        }
+
 
     }
 
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new ListMarvel();
                 break;
             case 1:
-                fragment = new ListMarvel();
+                fragment = new favoris();
                 break;
         }
 
