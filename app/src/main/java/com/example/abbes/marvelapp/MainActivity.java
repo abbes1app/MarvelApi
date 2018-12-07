@@ -2,7 +2,6 @@ package com.example.abbes.marvelapp;
 
 
 import android.content.pm.ActivityInfo;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -119,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             //additional code
             replaceFragment(0);
             Toast.makeText(getApplicationContext(),"je clique",Toast.LENGTH_LONG).show();
+        ListMarvel.bsearch = false ;
         }
         else {
             super.onBackPressed();
@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void replaceFragment(int pos) {
 
-        android.support.v4.app.Fragment fragment = null;
+        android.app.Fragment fragment = null;
         switch (pos) {
 
             case 0:
@@ -143,8 +143,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(null!=fragment) {
-            android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
-            android.support.v4.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
+            android.app.FragmentManager fragmentManager = getFragmentManager();
+            android.app.FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.main_content,fragment);
             transaction.addToBackStack(null);
             transaction.commit();

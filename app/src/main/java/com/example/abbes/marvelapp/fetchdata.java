@@ -1,12 +1,6 @@
 package com.example.abbes.marvelapp;
-import android.app.Activity;
-import android.app.Application;
-import android.app.job.JobInfo;
-import android.content.Context;
+
 import android.os.AsyncTask;
-import android.view.Display;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,7 +24,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
     String data ="";
     static List<MarvelModel> ModelList;
     private MarvelAdapter adapter ;
-    private String nom ;
+    private String nom = "" ;
     static int number = 0;
 
     public fetchdata(MarvelAdapter adapter,String nom){
@@ -48,6 +42,12 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
 
 
+    public fetchdata(String nom){
+
+        this.nom = nom ;
+
+    }
+
 
     @Override
     protected Void doInBackground(Void... voids) {
@@ -57,7 +57,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
                         url = new URL("https://gateway.marvel.com:443/v1/public/characters?offset="+number+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
                     }
                     else {
-                        url = new URL("https://gateway.marvel.com:443/v1/public/characters?name=Spider-Man&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
+                        url = new URL("https://gateway.marvel.com:443/v1/public/characters?name="+nom+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
 
                     }
 
@@ -149,11 +149,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
 
 
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -164,7 +160,10 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-        adapter.loadlist(ModelList);
+if(adapter != null){
+    adapter.loadlist(ModelList);
+}
+
 
     }
 }

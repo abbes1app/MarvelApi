@@ -1,6 +1,12 @@
 package com.example.abbes.marvelapp;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +22,12 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     private List<FavorisItem> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Bundle bundle;
+    private Context context;
 
     // data is passed into the constructor
     MyRecyclerViewAdapter(Context context,List<FavorisItem> data) {
+        this.context = context;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -61,11 +70,30 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         public void onClick(View view) {
             Toast.makeText(ApplicationContextProvider.getContext(),getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
 
+            fetchdata process = new fetchdata(getItem(getAdapterPosition()));
+
+            bundle = new Bundle();
+            bundle.putString("nom", String.valueOf(getAdapterPosition()));
+            process.execute();
+
+           replacefragment();
             if (mClickListener != null)
             {
                 mClickListener.onItemClick(view, getAdapterPosition());
             }
         }
+    }
+
+    private void replacefragment() {
+
+        Fragment fragment;
+        fragment = new DescriptionModel();
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager = ((AppCompatActivity) context).getFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.main_content,fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
     }
 
     // convenience method for getting data at click position

@@ -55,13 +55,9 @@ public class MyDescriptionRecycleViewAdapter extends RecyclerView.Adapter<MyDesc
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(ApplicationContextProvider.getContext(),getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
 
-            if (mClickListener != null)
-            {
-                mClickListener.onItemClick(view, getAdapterPosition());
-                Toast.makeText(ApplicationContextProvider.getContext(),getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
-            }
+            if (mClickListener != null)mClickListener.onItemClick(view, getAdapterPosition());
+
         }
     }
 

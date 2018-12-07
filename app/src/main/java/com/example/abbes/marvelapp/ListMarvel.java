@@ -3,20 +3,19 @@ package com.example.abbes.marvelapp;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
+
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -55,11 +54,11 @@ public  Bundle bundle ;
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     fermerclavier();
                     bsearch = true ;
-                    adapter.clear();
 
+                    adapter.clear();
                     fetchdata process = new fetchdata(adapter,edittext.getText().toString());
                     process.execute();
-                    Toast.makeText(getContext(),edittext.getText().toString(),Toast.LENGTH_LONG).show();
+                    Toast.makeText(ApplicationContextProvider.getContext(),edittext.getText().toString(),Toast.LENGTH_LONG).show();
                     edittext.setText("");
 
                 return true;
@@ -67,6 +66,7 @@ public  Bundle bundle ;
                 return false;
             }
         });
+
         final String nom = "";
         fetchdata process = new fetchdata(adapter,nom);
         process.execute();
@@ -104,9 +104,9 @@ public  Bundle bundle ;
 
                         fetchdata.number = fetchdata.number + 20 ;
 
-                        fetchdata process = new fetchdata(adapter,nom);
+                        fetchdata process = new fetchdata(adapter);
                         process.execute();
-                        Toast.makeText(getContext(),String.valueOf(fetchdata.number),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ApplicationContextProvider.getContext(),String.valueOf(fetchdata.number),Toast.LENGTH_SHORT).show();
                         etat = false ;
 
 
