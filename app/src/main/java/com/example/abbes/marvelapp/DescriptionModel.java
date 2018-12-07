@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +51,14 @@ public class DescriptionModel extends Fragment {
             i = Integer.parseInt(this.getArguments().getString("nom"));
         }
 
+
+
+
         final List<String> comic = new ArrayList<>();
         final List<String> serie = new ArrayList<>();
 
 
-
+Toast.makeText(getContext(),String.valueOf(MarvelAdapter.getMdl().size()),Toast.LENGTH_LONG).show();
 
         text = rootview.findViewById(R.id.text);
         description = rootview.findViewById(R.id.description);
@@ -67,26 +71,27 @@ public class DescriptionModel extends Fragment {
 
         recyclerlist.setLayoutManager(new LinearLayoutManager(getContext()));
         //    nom = String.valueOf(fetchdata.ModelList.get(i).getComicsList().size());
-        for(int j=0 ; j < fetchdata.ModelList.get(i).getComicsList().size() ; j++) {
+        for(int j=0 ; j < MarvelAdapter.getMdl().get(i).getComicsList().size() ; j++) {
 
-            String   kom = fetchdata.ModelList.get(i).getComicsList().get(j).getComic();
+            String   kom = MarvelAdapter.getMdl().get(i).getComicsList().get(j).getComic();
 
             comic.add(kom);
         }
 
-        for(int j=0 ; j < fetchdata.ModelList.get(i).getSeriesList().size() ; j++) {
+        for(int j=0 ; j < MarvelAdapter.getMdl().get(i).getSeriesList().size() ; j++) {
 
-            String   kom = fetchdata.ModelList.get(i).getSeriesList().get(j).getSerie();
+            String   kom = MarvelAdapter.getMdl().get(i).getSeriesList().get(j).getSerie();
+
 
             serie.add(kom);
         }
 
 
 
-        text.setText(fetchdata.ModelList.get(i).getName());
-        description.setText(fetchdata.ModelList.get(i).getDescription());
+        text.setText(MarvelAdapter.getMdl().get(i).getName());
+        description.setText(MarvelAdapter.getMdl().get(i).getDescription());
 
-        PicassoClient.downloadImage(getContext(),fetchdata.ModelList.get(i).getUrlImage(),image);
+        PicassoClient.downloadImage(getContext(),MarvelAdapter.getMdl().get(i).getUrlImage(),image);
 
 
 

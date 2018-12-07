@@ -41,7 +41,6 @@ public  Bundle bundle ;
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.list_marvel, container, false);
 
-        MarvelModel.Series st = new  MarvelModel.Series();
 
         final MarvelAdapter  adapter = new MarvelAdapter(ApplicationContextProvider.getContext());
         fetchdata.number = 0 ;
@@ -83,8 +82,8 @@ public  Bundle bundle ;
                 //Toast.makeText(getContext(),mytv.getText() ,Toast.LENGTH_SHORT).show();
                 bundle = new Bundle();
                 bundle.putString("nom", String.valueOf(i));
-                Toast.makeText(getContext(),String.valueOf(i),Toast.LENGTH_LONG).show();
-              //  replacefragment();
+              //  Toast.makeText(getContext(),String.valueOf(i),Toast.LENGTH_LONG).show();
+                replacefragment();
 
 
 

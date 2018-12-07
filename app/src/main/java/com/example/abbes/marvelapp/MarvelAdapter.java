@@ -8,26 +8,28 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MarvelAdapter extends BaseAdapter {
 
-  private  Context context;
-  private List<MarvelModel> mdl;
+    private  Context context;
 
-    public List<MarvelModel> getMdl() {
+    private static List<MarvelModel> mdl;
+
+    public static List<MarvelModel> getMdl() {
         return mdl;
     }
 
     public void setMdl(List<MarvelModel> mdl) {
-        this.mdl = mdl;
+        mdl = mdl;
     }
 
     MarvelAdapter(Context context) {
         this.context = context;
-        this.mdl = new ArrayList<>();
+        mdl = new ArrayList<>();
     }
 
     @Override
@@ -49,6 +51,8 @@ public class MarvelAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         @SuppressLint("ViewHolder")
+
+
         View v = View.inflate(context, R.layout.model, null);
         TextView     nameTxt = v.findViewById(R.id.nameTxt);
         ImageView   img = v.findViewById(R.id.marvelImage);
@@ -64,7 +68,12 @@ public class MarvelAdapter extends BaseAdapter {
 
     public void loadlist(List<MarvelModel> list) {
 
+
         mdl.addAll(list);
+
+
+       Toast.makeText(ApplicationContextProvider.getContext(),String.valueOf(getMdl().size()),Toast.LENGTH_LONG).show();
+
         notifyDataSetChanged();
 
         ListMarvel.etat = true ;
