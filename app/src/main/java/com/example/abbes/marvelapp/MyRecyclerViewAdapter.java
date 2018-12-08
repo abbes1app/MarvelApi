@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -44,7 +45,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(ViewHolder holder, int position) {
         String text = mData.get(position).getNom();
         holder.myTextView.setText(text);
-        PicassoClient.downloadImage(ApplicationContextProvider.getContext(),mData.get(position).getUrlImg(),holder.myImage);
+        PicassoClient.downloadImage(AppContext.getContext(),mData.get(position).getUrlImg(),holder.myImage);
     }
 
     // total number of rows
@@ -68,13 +69,15 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
 
         @Override
         public void onClick(View view) {
-            Toast.makeText(ApplicationContextProvider.getContext(),getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
+
+
+            Toast.makeText(AppContext.getContext(),getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
 
             fetchdata process = new fetchdata(getItem(getAdapterPosition()));
-
-            bundle = new Bundle();
-            bundle.putString("nom", String.valueOf(getAdapterPosition()));
             process.execute();
+            bundle = new Bundle();
+            bundle.putString("itemfavoris", String.valueOf(getItem(getAdapterPosition())));
+
 
            replacefragment();
             if (mClickListener != null)
@@ -89,7 +92,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         Fragment fragment;
         fragment = new DescriptionModel();
         fragment.setArguments(bundle);
-        FragmentManager fragmentManager = ((AppCompatActivity) context).getFragmentManager();
+        FragmentManager fragmentManager = ((Activity) context).getFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_content,fragment);
         transaction.addToBackStack(null);

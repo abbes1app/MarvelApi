@@ -16,8 +16,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public static final String Marvel_COLUMN_URL = "url";
 
 
-    private HashMap hp;
-
     public DBHelper(Context context) {
         super(context, DATABASE_NAME , null, 1);
     }
@@ -43,13 +41,8 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("url" ,  url);
-     long check =   db.insert(Marvel_TABLE_NAME, null, contentValues);
-     if(check != -1) {
-         return true;
-     }
-     else {
-         return false ;
-     }
+        long check =   db.insert(Marvel_TABLE_NAME, null, contentValues);
+        return check != -1;
 
 
     }
@@ -57,18 +50,9 @@ public class DBHelper extends SQLiteOpenHelper {
     public boolean getData(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from "+ Marvel_TABLE_NAME +"where name = '"+name+"'", null );
-        if(res.moveToFirst()){
-            return true;
-        }
-
-        else {
-            return false ;
-        }
+        return res.moveToFirst();
 
     }
-
-
-
 
 
     public Integer deleteModel (String name) {
@@ -81,18 +65,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public ArrayList<FavorisItem> getAllModels() {
         ArrayList<FavorisItem> array_list = new ArrayList<>();
-        //hp = new HashMap();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from " + Marvel_TABLE_NAME, null );
         res.moveToFirst();
 
         while(!res.isAfterLast()){
 
-            array_list.add(new FavorisItem(res.getString(res.getColumnIndex(Marvel_COLUMN_NAME)),
-
-                    res.getString(res.getColumnIndex(Marvel_COLUMN_URL))));
+            array_list.add(new FavorisItem(
+                            res.getString(res.getColumnIndex(Marvel_COLUMN_NAME)),
+                            res.getString(res.getColumnIndex(Marvel_COLUMN_URL))));
             res.moveToNext();
         }
+
         return array_list;
     }
+    
 }

@@ -2,7 +2,7 @@ package com.example.abbes.marvelapp;
 
 import android.app.Application;
 import android.content.Context;
-public class ApplicationContextProvider extends Application {
+public class AppContext extends Application {
     /**
      * Keeps a reference of the application context
      */

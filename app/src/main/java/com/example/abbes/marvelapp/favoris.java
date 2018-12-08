@@ -37,21 +37,20 @@ public class favoris extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_favoris, container, false);
 
-        db = new DBHelper(getContext());
-
+        db = new DBHelper(getActivity());
         favorislist = v.findViewById(R.id.favorislist);
-        favorislist.setLayoutManager(new LinearLayoutManager(getContext()));
+        favorislist.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 
         ArrayList<FavorisItem> array_list = db.getAllModels();
         if(array_list.size()>0){
-            favorisadapter = new MyRecyclerViewAdapter(getContext(),array_list);
+            favorisadapter = new MyRecyclerViewAdapter(getActivity(),array_list);
         }
 
         else{
             array_list.add(new FavorisItem("Vous n'avez pas encore ajouter de Marvel ",""));
-            favorisadapter = new MyRecyclerViewAdapter(getContext(),array_list);
+            favorisadapter = new MyRecyclerViewAdapter(getActivity(),array_list);
 
         }
 

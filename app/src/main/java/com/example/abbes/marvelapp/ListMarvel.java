@@ -2,6 +2,7 @@ package com.example.abbes.marvelapp;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -15,16 +16,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+
 public class ListMarvel extends Fragment {
-public static boolean etat = true ;
+public static boolean Chargement = false ;
 public static boolean bsearch = false ;
+public  ImageView NoWifi ;
 public  ListView data ;
 public  Bundle bundle ;
 
@@ -34,32 +35,48 @@ public  Bundle bundle ;
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-                             Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.list_marvel, container, false);
 
-
-        final MarvelAdapter  adapter = new MarvelAdapter(ApplicationContextProvider.getContext());
-        fetchdata.number = 0 ;
         data = v.findViewById(R.id.listMarvel);
+        NoWifi = v.findViewById(R.id.Nowifi);
 
+        final MarvelAdapter  adapter = new MarvelAdapter(AppContext.getContext());
+
+        // Liste vide au lancement
         data.setAdapter(adapter);
-        final EditText edittext = v.findViewById(R.id.search);
-        edittext.setOnKeyListener(new View.OnKeyListener() {
+
+        // Verification de La Connexion Reseau
+        if(TestInternet(AppContext.getContext())) {
+
+            fetchdata process = new fetchdata(adapter);
+            process.execute();
+
+        }
+        else{
+            Toast.makeText(AppContext.getContext(),
+                    "Verifier VOtre Connexion",Toast.LENGTH_LONG).show();
+            NoWifi.setVisibility(View.VISIBLE);
+        }
+
+
+        // Recherche par Nom
+        final EditText  ChampRecherche = v.findViewById(R.id.search);
+
+        ChampRecherche.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
-                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
-                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN)
+                        && (keyCode == KeyEvent.KEYCODE_ENTER)
+                        && TestInternet(AppContext.getContext())) {
+
                     fermerclavier();
                     bsearch = true ;
-
-                    adapter.clear();
-                    fetchdata process = new fetchdata(adapter,edittext.getText().toString());
+                    MarvelAdapter.clear();
+                    fetchdata process = new fetchdata(adapter,ChampRecherche.getText().toString());
                     process.execute();
-                    Toast.makeText(ApplicationContextProvider.getContext(),edittext.getText().toString(),Toast.LENGTH_LONG).show();
-                    edittext.setText("");
+                    ChampRecherche.setText("");
 
                 return true;
                 }
@@ -67,26 +84,22 @@ public  Bundle bundle ;
             }
         });
 
-        final String nom = "";
-        fetchdata process = new fetchdata(adapter,nom);
-        process.execute();
+
+        // Quand on clique sur un Item pour voir les details
 
         data.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-              //  TextView mytv = (TextView) view.findViewById(R.id.nameTxt);
-
-           //   String mytv = fetchdata.ModelList.get(i).getName();
-                //Toast.makeText(getContext(),mytv.getText() ,Toast.LENGTH_SHORT).show();
+                // On lui envoie son Nom pour récupérer l'objet de la classe MarvelModel
                 bundle = new Bundle();
                 bundle.putString("nom", String.valueOf(i));
-              //  Toast.makeText(getContext(),String.valueOf(i),Toast.LENGTH_LONG).show();
+                // On lance le fragment description
                 replacefragment();
-
-
 
             }
         });
+
+        //On relance l'API quand on arrive a la fin de la liste
 
         data.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
@@ -97,25 +110,25 @@ public  Bundle bundle ;
             @Override
             public void onScroll(AbsListView absListView, int i, int i1, int i2) {
 
-                if(i+i1 == i2 && i2!=0 && etat
-                         && !bsearch)
+                if(i+i1 == i2 && i2!=0
+                        && !Chargement
+                        && !bsearch
+                        && fetchdata.count == fetchdata.limit
+                        && TestInternet(AppContext.getContext())) {
 
-                {
-
-                        fetchdata.number = fetchdata.number + 20 ;
-
-                        fetchdata process = new fetchdata(adapter);
-                        process.execute();
-                        Toast.makeText(ApplicationContextProvider.getContext(),String.valueOf(fetchdata.number),Toast.LENGTH_SHORT).show();
-                        etat = false ;
-
+                    fetchdata.offset = fetchdata.offset + 20 ;
+                    fetchdata process = new fetchdata(adapter);
+                    process.execute();
+                    Chargement = true ;
 
                 }
 
             }
 
         });
+
     return v ;
+
     }
 
     private void fermerclavier() {
@@ -139,7 +152,14 @@ public  Bundle bundle ;
         transaction.commit();
     }
 
+    public static boolean TestInternet(Context context)
+    {
+        ConnectivityManager connec = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        android.net.NetworkInfo wifi = connec.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        android.net.NetworkInfo mobile = connec.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
+        return wifi.isConnected() || mobile.isConnected();
+    }
 
 
 

@@ -1,7 +1,9 @@
 package com.example.abbes.marvelapp;
 
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -52,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
         MenuGaucheLayout.closeDrawer(listMenuGauche);
 
         //Display fragment 1 when start
-        replaceFragment(0);
+
+          replaceFragment(0);
+
         //Hanlde on item click
 
         listMenuGauche.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-
+fetchdata.offset = 0 ;
 
 
         if (ListMarvel.bsearch) {
@@ -150,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
     }
+
+
 
 }
 

@@ -1,9 +1,12 @@
 package com.example.abbes.marvelapp;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -26,21 +29,19 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class DescriptionModel extends Fragment {
-    private  DBHelper db ;
-    boolean aimer = false ;
-    TextView text, description ;
-    ImageView image;
-    MyDescriptionRecycleViewAdapter adapter;
-    Button clickcomic , clickserie,favoris ;
-    int i ;
-    RecyclerView recyclerlist ;
-    String nom ;
+    private DBHelper db ;
+    private boolean aimer = false ;
+    private TextView Nom, description ;
+    private ImageView image;
+    private MyDescriptionRecycleViewAdapter adapter;
+    private Button ListSeries ,ListComics,Favorisbtn ;
+    private int i ;
+    private RecyclerView recyclerlist ;
 
 
     public DescriptionModel() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,13 +49,19 @@ public class DescriptionModel extends Fragment {
         // Inflate the layout for this fragment
         View rootview = inflater.inflate(R.layout.fragment_description_model, container, false);
 
-        db = new DBHelper(getContext());
+        db = new DBHelper(AppContext.getContext());
 
-
-        if (getArguments() != null) {
+        //Pour savoir d'ou in vient
+        if (this.getArguments().getString("nom") != null) {
             i = Integer.parseInt(this.getArguments().getString("nom"));
         }
 
+        else{
+            String nom  = this.getArguments().getString("itemfavoris");
+            Toast.makeText(getActivity(),"Abbes" + String.valueOf(nom),Toast.LENGTH_LONG).show();
+            i = MarvelAdapter.getIndexByname(nom);
+
+        }
 
 
 
@@ -62,103 +69,92 @@ public class DescriptionModel extends Fragment {
         final List<String> serie = new ArrayList<>();
 
 
-Toast.makeText(getContext(),String.valueOf(MarvelAdapter.getMdl().size()),Toast.LENGTH_LONG).show();
-
-        text = rootview.findViewById(R.id.text);
+        Nom = rootview.findViewById(R.id.text);
         description = rootview.findViewById(R.id.description);
         image = rootview.findViewById(R.id.dsmarvelImage);
-        favoris = rootview.findViewById(R.id.favoris);
-        clickcomic = rootview.findViewById(R.id.clickcomic);
-        clickserie = rootview.findViewById(R.id.clickserie);
+        Favorisbtn = rootview.findViewById(R.id.favoris);
+        ListComics = rootview.findViewById(R.id.clickcomic);
+        ListSeries = rootview.findViewById(R.id.clickserie);
 
         recyclerlist = rootview.findViewById(R.id.comiclist);
 
-        recyclerlist.setLayoutManager(new LinearLayoutManager(getContext()));
-        //    nom = String.valueOf(fetchdata.ModelList.get(i).getComicsList().size());
-        for(int j=0 ; j < MarvelAdapter.getMdl().get(i).getComicsList().size() ; j++) {
+        recyclerlist.setLayoutManager(new LinearLayoutManager(AppContext.getContext()));
 
-            String   kom = MarvelAdapter.getMdl().get(i).getComicsList().get(j).getComic();
+        for(int j=0 ; j < MarvelAdapter.getMdl().get(i).getComicsList().size() ; j++){
 
-            comic.add(kom);
+            comic.add(MarvelAdapter.getMdl().get(i).getComicsList().get(j).getComic()) ;
         }
 
         for(int j=0 ; j < MarvelAdapter.getMdl().get(i).getSeriesList().size() ; j++) {
 
-            String   kom = MarvelAdapter.getMdl().get(i).getSeriesList().get(j).getSerie();
+            serie.add(MarvelAdapter.getMdl().get(i).getSeriesList().get(j).getSerie()) ;
 
-
-            serie.add(kom);
         }
 
 
-
-        text.setText(MarvelAdapter.getMdl().get(i).getName());
+        Nom.setText(MarvelAdapter.getMdl().get(i).getName());
         description.setText(MarvelAdapter.getMdl().get(i).getDescription());
 
-        PicassoClient.downloadImage(getContext(),MarvelAdapter.getMdl().get(i).getUrlImage(),image);
+        PicassoClient.downloadImage(AppContext.getContext(),MarvelAdapter.getMdl().get(i).getUrlImage(),image);
 
-        if(db.getData(text.getText().toString())){
-            favoris.setBackgroundResource(R.drawable.coeur_r_icon);
+        // On verifie si le Model est dans favoris pour la couleur du coeur
+
+        if(db.getData(Nom.getText().toString())){
+            Favorisbtn.setBackgroundResource(R.drawable.coeur_r_icon);
             aimer = true ;
         }
 
 
-   favoris.setOnClickListener(new View.OnClickListener() {
+        Favorisbtn.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View view) {
 
-
         if(aimer){
 
-            favoris.setBackgroundResource(R.drawable.coeur_icon);
+            Favorisbtn.setBackgroundResource(R.drawable.coeur_icon);
 
-            if(db.deleteModel(text.getText().toString()) == 1){
-                Toast.makeText(getContext(),"supprimer avec succes",Toast.LENGTH_SHORT).show();
+            if(db.deleteModel(Nom.getText().toString()) == 1){
                 aimer = false ;
             }
             else{
-                Toast.makeText(getContext(),"erreur lors de la supression",Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(AppContext.getContext(),"erreur lors de la supression",Toast.LENGTH_SHORT).show();
             }
-
         }
         else {
-            favoris.setBackgroundResource(R.drawable.coeur_r_icon);
-            if(db.Insertfavoris(text.getText().toString(),MarvelAdapter.getMdl().get(i).getUrlImage())) {
-                Toast.makeText(getContext(),"succes",Toast.LENGTH_SHORT).show();
+
+            Favorisbtn.setBackgroundResource(R.drawable.coeur_r_icon);
+            if(db.Insertfavoris(Nom.getText().toString(),MarvelAdapter.getMdl().get(i).getUrlImage())) {
                 aimer = true ;
             }
             else {
-                Toast.makeText(getContext(),"non",Toast.LENGTH_LONG).show();
+                Toast.makeText(AppContext.getContext(),"erreur lors de l'insertion",Toast.LENGTH_LONG).show();
             }
         }
-
-
-
-
-
     }
 });
 
-
-        clickserie.setOnClickListener(new View.OnClickListener() {
+        // defiler les series du model
+        ListSeries.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              adapter = new MyDescriptionRecycleViewAdapter(getContext(),serie);
+               adapter = new MyDescriptionRecycleViewAdapter(getActivity(),serie);
                runLayoutAnimation(recyclerlist);
             }
         });
 
-
-        clickcomic.setOnClickListener(new View.OnClickListener() {
+        //defiler les comics du model
+        ListComics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              adapter = new MyDescriptionRecycleViewAdapter(getContext(),comic);
+               adapter = new MyDescriptionRecycleViewAdapter(getActivity(),comic);
                runLayoutAnimation(recyclerlist);
             }
         });
+
         return rootview ;
     }
+
+    // fonction Animation pour le RecycleView
 
     private void runLayoutAnimation(final RecyclerView recyclerView) {
 

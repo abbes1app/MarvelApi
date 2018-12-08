@@ -23,6 +23,17 @@ public class MarvelAdapter extends BaseAdapter {
         return mdl;
     }
 
+
+    public static int getIndexByname(String Name)
+    {
+        for(MarvelModel item : mdl)
+        {
+            if(item.getName().equals(Name))
+                return mdl.indexOf(item);
+        }
+        return -1;
+    }
+
     public void setMdl(List<MarvelModel> mdl) {
         mdl = mdl;
     }
@@ -72,16 +83,16 @@ public class MarvelAdapter extends BaseAdapter {
         mdl.addAll(list);
 
 
-       Toast.makeText(ApplicationContextProvider.getContext(),String.valueOf(getMdl().size()),Toast.LENGTH_LONG).show();
+       Toast.makeText(AppContext.getContext(),String.valueOf(getMdl().size()),Toast.LENGTH_LONG).show();
 
         notifyDataSetChanged();
 
-        ListMarvel.etat = true ;
+        ListMarvel.Chargement = false ;
 
 
     }
 
-    public void clear() {
+    public static void clear() {
          mdl.clear();
     }
 }

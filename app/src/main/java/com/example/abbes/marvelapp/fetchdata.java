@@ -21,11 +21,14 @@ import java.util.List;
  */
 
 public class fetchdata extends AsyncTask<Void,Void,Void> {
-    String data ="";
-    static List<MarvelModel> ModelList;
+
+    private static List<MarvelModel> ModelList;
     private MarvelAdapter adapter ;
     private String nom = "" ;
-    static int number = 0;
+    private String data ="";
+    static int count = 0;
+    static int offset = 0;
+    static int limit = 0;
 
     public fetchdata(MarvelAdapter adapter,String nom){
 
@@ -54,7 +57,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
         try {
             URL url;
                     if (nom.equals("")) {
-                        url = new URL("https://gateway.marvel.com:443/v1/public/characters?offset="+number+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
+                        url = new URL("https://gateway.marvel.com:443/v1/public/characters?offset="+offset+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
                     }
                     else {
                         url = new URL("https://gateway.marvel.com:443/v1/public/characters?name="+nom+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
@@ -72,10 +75,12 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
             JSONObject JSONdata = new JSONObject(data);
 
-            //   singleParsed = "Total" + JSONdata.getJSONObject("data").getString("total");
+
+
 
             JSONArray MarvelList = JSONdata.getJSONObject("data").getJSONArray("results");
-
+           limit =  Integer.valueOf(JSONdata.getJSONObject("data").getString("limit"));
+           count =  Integer.valueOf(JSONdata.getJSONObject("data").getString("count"));
             ModelList = new ArrayList<>() ;
 
             for (int i =0 ; i< MarvelList.length();i++) {
@@ -152,6 +157,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+
 
         return null;
     }
