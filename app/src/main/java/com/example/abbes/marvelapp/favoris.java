@@ -15,6 +15,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -22,28 +23,42 @@ import java.util.ArrayList;
  */
 public class favoris extends Fragment {
 
-    private  DBHelper db ;
-    MyRecyclerViewAdapter favorisadapter;
-    RecyclerView favorislist ;
+    private DBHelper db ;
+    private MyRecyclerViewAdapter favorisadapter;
+    private RecyclerView favorislist ;
+    private List<FavorisItem> array_list ;
+
     public favoris() {
         // Required empty public constructor
     }
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_favoris, container, false);
-
+        // Connexion a la base ;
         db = new DBHelper(getActivity());
+
         favorislist = v.findViewById(R.id.favorislist);
         favorislist.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
+        MarvelAdapter.clear();
 
-        ArrayList<FavorisItem> array_list = db.getAllModels();
+        // Recuperer la liste des favoris depuis la base
+        array_list = db.getAllModels();
+
+        // lancer une mise a jour pour chaque model
+        for(int i = 0 ; i< array_list.size();i++){
+            String nom = array_list.get(i).getNom();
+            fetchdata process = new fetchdata(nom.replaceAll(" ","%20"));
+            process.execute();
+        }
+
+         // tester si on a pas de favoris
+
         if(array_list.size()>0){
             favorisadapter = new MyRecyclerViewAdapter(getActivity(),array_list);
         }
@@ -56,9 +71,8 @@ public class favoris extends Fragment {
 
         runLayoutAnimation(favorislist);
 
-
-
     return  v ;
+
     }
 
     private void runLayoutAnimation(RecyclerView favorislist) {
@@ -70,10 +84,5 @@ public class favoris extends Fragment {
         favorislist.setAdapter(favorisadapter);
         favorislist.scheduleLayoutAnimation();
     }
-
-
-
-
-
 
 }

@@ -71,19 +71,20 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         public void onClick(View view) {
 
 
-            Toast.makeText(AppContext.getContext(),getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
-
-            fetchdata process = new fetchdata(getItem(getAdapterPosition()));
-            process.execute();
-            bundle = new Bundle();
-            bundle.putString("itemfavoris", String.valueOf(getItem(getAdapterPosition())));
+            String  nom =  getItem(getAdapterPosition()) ;
 
 
-           replacefragment();
-            if (mClickListener != null)
-            {
-                mClickListener.onItemClick(view, getAdapterPosition());
-            }
+                bundle = new Bundle();
+                bundle.putString("itemfavoris", String.valueOf(getItem(getAdapterPosition())));
+                replacefragment();
+                Toast.makeText(context,getItem(getAdapterPosition()),Toast.LENGTH_LONG).show();
+
+
+
+
+
+            if (mClickListener != null) mClickListener.onItemClick(view, getAdapterPosition());
+
         }
     }
 

@@ -1,6 +1,8 @@
 package com.example.abbes.marvelapp;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -43,8 +45,6 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("url" ,  url);
         long check =   db.insert(Marvel_TABLE_NAME, null, contentValues);
         return check != -1;
-
-
     }
 
     public boolean getData(String name) {
@@ -63,8 +63,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<FavorisItem> getAllModels() {
-        ArrayList<FavorisItem> array_list = new ArrayList<>();
+
+    public List<FavorisItem> getAllModels() {
+        List<FavorisItem> array_list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor res =  db.rawQuery( "select * from " + Marvel_TABLE_NAME, null );
         res.moveToFirst();

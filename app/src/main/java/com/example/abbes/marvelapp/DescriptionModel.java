@@ -29,6 +29,7 @@ import java.util.List;
  * A simple {@link Fragment} subclass.
  */
 public class DescriptionModel extends Fragment {
+
     private DBHelper db ;
     private boolean aimer = false ;
     private TextView Nom, description ;
@@ -46,7 +47,7 @@ public class DescriptionModel extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View rootview = inflater.inflate(R.layout.fragment_description_model, container, false);
 
         db = new DBHelper(AppContext.getContext());
@@ -58,12 +59,9 @@ public class DescriptionModel extends Fragment {
 
         else{
             String nom  = this.getArguments().getString("itemfavoris");
-            Toast.makeText(getActivity(),"Abbes" + String.valueOf(nom),Toast.LENGTH_LONG).show();
             i = MarvelAdapter.getIndexByname(nom);
 
         }
-
-
 
         final List<String> comic = new ArrayList<>();
         final List<String> serie = new ArrayList<>();
@@ -123,6 +121,7 @@ public class DescriptionModel extends Fragment {
         else {
 
             Favorisbtn.setBackgroundResource(R.drawable.coeur_r_icon);
+
             if(db.Insertfavoris(Nom.getText().toString(),MarvelAdapter.getMdl().get(i).getUrlImage())) {
                 aimer = true ;
             }

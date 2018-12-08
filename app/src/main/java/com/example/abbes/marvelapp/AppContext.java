@@ -3,20 +3,15 @@ package com.example.abbes.marvelapp;
 import android.app.Application;
 import android.content.Context;
 public class AppContext extends Application {
-    /**
-     * Keeps a reference of the application context
-     */
+
+    // retourner le Context de l'application
     private static Context sContext;
     @Override
     public void onCreate() {
         super.onCreate();
         sContext = getApplicationContext();
     }
-    /**
-     * Returns the application context
-     *
-     * @return application context
-     */
+
     public static Context getContext() {
         return sContext;
     }

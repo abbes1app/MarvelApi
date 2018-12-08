@@ -23,12 +23,13 @@ import java.util.List;
 public class fetchdata extends AsyncTask<Void,Void,Void> {
 
     private static List<MarvelModel> ModelList;
-    private MarvelAdapter adapter ;
+    private  MarvelAdapter adapter ;
     private String nom = "" ;
     private String data ="";
     static int count = 0;
     static int offset = 0;
     static int limit = 0;
+
 
     public fetchdata(MarvelAdapter adapter,String nom){
 
@@ -43,17 +44,17 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
     }
 
-
-
     public fetchdata(String nom){
 
         this.nom = nom ;
+
 
     }
 
 
     @Override
     protected Void doInBackground(Void... voids) {
+
         try {
             URL url;
                     if (nom.equals("")) {
@@ -148,6 +149,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
                 ModelList.add(md);
 
+
             }
 
 
@@ -166,9 +168,10 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-if(adapter != null){
-    adapter.loadlist(ModelList);
-}
+
+      adapter.loadlist(ModelList);
+
+
 
 
     }

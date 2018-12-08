@@ -82,9 +82,6 @@ public class MarvelAdapter extends BaseAdapter {
 
         mdl.addAll(list);
 
-
-       Toast.makeText(AppContext.getContext(),String.valueOf(getMdl().size()),Toast.LENGTH_LONG).show();
-
         notifyDataSetChanged();
 
         ListMarvel.Chargement = false ;
