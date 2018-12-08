@@ -1,4 +1,4 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.Autre;
 
 import android.app.Application;
 import android.content.Context;

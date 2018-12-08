@@ -1,12 +1,9 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.Fragment;
 
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,12 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.abbes.marvelapp.Autre.AppContext;
+import com.example.abbes.marvelapp.BaseDeDonnées.DBHelper;
+import com.example.abbes.marvelapp.Adapter.MarvelAdapter;
+import com.example.abbes.marvelapp.Adapter.MyDescriptionRecycleViewAdapter;
+import com.example.abbes.marvelapp.Autre.PicassoClient;
+import com.example.abbes.marvelapp.R;
 
 import java.util.ArrayList;
 import java.util.List;

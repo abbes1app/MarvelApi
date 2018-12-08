@@ -1,4 +1,4 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.Fragment;
 
 
 import android.content.Context;
@@ -20,6 +20,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.abbes.marvelapp.Autre.AppContext;
+import com.example.abbes.marvelapp.Adapter.MarvelAdapter;
+import com.example.abbes.marvelapp.Parsing.fetchdata;
+import com.example.abbes.marvelapp.R;
 
 
 public class ListMarvel extends Fragment {
@@ -42,8 +46,9 @@ public  Bundle bundle ;
 
         data = v.findViewById(R.id.listMarvel);
         NoWifi = v.findViewById(R.id.Nowifi);
+        fetchdata.offset = 0 ;
 
-        final MarvelAdapter  adapter = new MarvelAdapter(AppContext.getContext());
+        final MarvelAdapter adapter = new MarvelAdapter(AppContext.getContext());
 
         // Liste vide au lancement
         data.setAdapter(adapter);

@@ -1,4 +1,4 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.ClassObject;
 
 import java.util.ArrayList;
 import java.util.List;

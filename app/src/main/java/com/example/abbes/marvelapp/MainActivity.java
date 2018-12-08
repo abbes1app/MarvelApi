@@ -1,9 +1,7 @@
 package com.example.abbes.marvelapp;
 
 
-import android.content.Context;
 import android.content.pm.ActivityInfo;
-import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,6 +12,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.example.abbes.marvelapp.Adapter.MenuGaucheAdapter;
+import com.example.abbes.marvelapp.ClassObject.ItemList;
+import com.example.abbes.marvelapp.Fragment.ListMarvel;
+import com.example.abbes.marvelapp.Fragment.favoris;
+import com.example.abbes.marvelapp.Parsing.fetchdata;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,48 +36,44 @@ public class MainActivity extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
 
-        //Init component
+
         listMenuGauche = findViewById(R.id.list_menu);
         MenuGaucheLayout = findViewById(R.id.meun_gauche_layout);
         MenuGauche = new ArrayList<>();
-        //Add item for sliding list
+
+
         MenuGauche.add(new ItemList(R.drawable.marvel,"Accueil" ));
         MenuGauche.add(new ItemList(R.drawable.marvel,"Favoris"));
 
 
-        MenuGaucheAdapter  adapter = new MenuGaucheAdapter(this, MenuGauche);
+        MenuGaucheAdapter adapter = new MenuGaucheAdapter(this, MenuGauche);
         listMenuGauche.setAdapter(adapter);
 
-        //Display icon to open/close sliding pastille_liste
+
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //item selected
+
         listMenuGauche.setItemChecked(0, true);
-        //Close menu
+
         MenuGaucheLayout.closeDrawer(listMenuGauche);
 
-        //Display fragment 1 when start
 
-          replaceFragment(0);
 
-        //Hanlde on item click
+        replaceFragment(0);
+
 
         listMenuGauche.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //Set title
+
                 setTitle(MenuGauche.get(position).getTitle());
-                //item selected
+
                 listMenuGauche.setItemChecked(position, true);
-
-
 
                 //Replace fragment
                 replaceFragment(position);
 
-
-                //Close menu
                 MenuGaucheLayout.closeDrawer(listMenuGauche);
             }
         });
@@ -122,7 +122,7 @@ fetchdata.offset = 0 ;
             //additional code
             replaceFragment(0);
             Toast.makeText(getApplicationContext(),"je clique",Toast.LENGTH_LONG).show();
-        ListMarvel.bsearch = false ;
+            ListMarvel.bsearch = false ;
         }
         else {
             super.onBackPressed();

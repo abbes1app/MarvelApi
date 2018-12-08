@@ -1,14 +1,17 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.abbes.marvelapp.Fragment.ListMarvel;
+import com.example.abbes.marvelapp.ClassObject.MarvelModel;
+import com.example.abbes.marvelapp.Autre.PicassoClient;
+import com.example.abbes.marvelapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +41,7 @@ public class MarvelAdapter extends BaseAdapter {
         mdl = mdl;
     }
 
-    MarvelAdapter(Context context) {
+    public MarvelAdapter(Context context) {
         this.context = context;
         mdl = new ArrayList<>();
     }
@@ -78,7 +81,6 @@ public class MarvelAdapter extends BaseAdapter {
 
 
     public void loadlist(List<MarvelModel> list) {
-
 
         mdl.addAll(list);
 

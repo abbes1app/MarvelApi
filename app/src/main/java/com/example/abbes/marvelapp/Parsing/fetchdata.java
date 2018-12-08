@@ -1,6 +1,9 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.Parsing;
 
 import android.os.AsyncTask;
+
+import com.example.abbes.marvelapp.Adapter.MarvelAdapter;
+import com.example.abbes.marvelapp.ClassObject.MarvelModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,7 +14,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +25,12 @@ import java.util.List;
 public class fetchdata extends AsyncTask<Void,Void,Void> {
 
     private static List<MarvelModel> ModelList;
-    private  MarvelAdapter adapter ;
+    private MarvelAdapter adapter ;
     private String nom = "" ;
     private String data ="";
-    static int count = 0;
-    static int offset = 0;
-    static int limit = 0;
+    public static int count = 0;
+    public static int offset = 0;
+    public static int limit = 0;
 
 
     public fetchdata(MarvelAdapter adapter,String nom){
@@ -44,12 +46,6 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
     }
 
-    public fetchdata(String nom){
-
-        this.nom = nom ;
-
-
-    }
 
 
     @Override
@@ -72,17 +68,17 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
             while(line != null){
                 line = bufferedReader.readLine();
                 data = data + line;
+
             }
 
             JSONObject JSONdata = new JSONObject(data);
 
+            limit =  Integer.valueOf(JSONdata.getJSONObject("data").getString("limit"));
+            count =  Integer.valueOf(JSONdata.getJSONObject("data").getString("count"));
 
-
+            ModelList = new ArrayList<>() ;
 
             JSONArray MarvelList = JSONdata.getJSONObject("data").getJSONArray("results");
-           limit =  Integer.valueOf(JSONdata.getJSONObject("data").getString("limit"));
-           count =  Integer.valueOf(JSONdata.getJSONObject("data").getString("count"));
-            ModelList = new ArrayList<>() ;
 
             for (int i =0 ; i< MarvelList.length();i++) {
 
@@ -120,8 +116,6 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
                 }
 
 
-
-
                 List<MarvelModel.Comics> comicsList = new ArrayList<>();
 
                 JSONArray ComicsList = JO.getJSONObject("comics").getJSONArray("items") ;
@@ -135,9 +129,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
                     st.setComic(IO.getString("name"));
                     comicsList.add(st);
 
-
                 }
-
 
 
                 md.setId(id);
@@ -149,11 +141,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
                 ModelList.add(md);
 
-
             }
-
-
-
 
 
         } catch (IOException | JSONException e) {
@@ -168,11 +156,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
 
-
-      adapter.loadlist(ModelList);
-
-
-
+         adapter.loadlist(ModelList);
 
     }
 }

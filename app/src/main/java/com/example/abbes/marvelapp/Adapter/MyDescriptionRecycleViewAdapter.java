@@ -1,4 +1,4 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.Adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.abbes.marvelapp.R;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class MyDescriptionRecycleViewAdapter extends RecyclerView.Adapter<MyDesc
     private ItemClickListener mClickListener;
 
     // data is passed into the constructor
-    MyDescriptionRecycleViewAdapter(Context context, List<String> data) {
+    public MyDescriptionRecycleViewAdapter(Context context, List<String> data) {
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }

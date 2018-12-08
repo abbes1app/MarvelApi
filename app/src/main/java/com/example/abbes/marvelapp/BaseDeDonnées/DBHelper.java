@@ -1,6 +1,5 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.BaseDeDonnées;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -8,6 +7,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase;
+
+import com.example.abbes.marvelapp.ClassObject.FavorisItem;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -67,7 +68,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public List<FavorisItem> getAllModels() {
         List<FavorisItem> array_list = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res =  db.rawQuery( "select * from " + Marvel_TABLE_NAME, null );
+        Cursor res =  db.rawQuery( "select * from " + Marvel_TABLE_NAME+" ORDER BY name", null );
         res.moveToFirst();
 
         while(!res.isAfterLast()){

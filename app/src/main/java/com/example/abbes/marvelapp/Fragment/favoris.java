@@ -1,11 +1,9 @@
-package com.example.abbes.marvelapp;
+package com.example.abbes.marvelapp.Fragment;
 
 
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +12,14 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
-import java.util.ArrayList;
+import com.example.abbes.marvelapp.Autre.AppContext;
+import com.example.abbes.marvelapp.BaseDeDonnées.DBHelper;
+import com.example.abbes.marvelapp.ClassObject.FavorisItem;
+import com.example.abbes.marvelapp.Adapter.MarvelAdapter;
+import com.example.abbes.marvelapp.Adapter.MyRecyclerViewAdapter;
+import com.example.abbes.marvelapp.Parsing.fetchdata;
+import com.example.abbes.marvelapp.R;
+
 import java.util.List;
 
 
@@ -44,8 +49,10 @@ public class favoris extends Fragment {
         favorislist = v.findViewById(R.id.favorislist);
         favorislist.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        final MarvelAdapter adapter = new MarvelAdapter(AppContext.getContext());
 
         MarvelAdapter.clear();
+
 
         // Recuperer la liste des favoris depuis la base
         array_list = db.getAllModels();
@@ -53,7 +60,7 @@ public class favoris extends Fragment {
         // lancer une mise a jour pour chaque model
         for(int i = 0 ; i< array_list.size();i++){
             String nom = array_list.get(i).getNom();
-            fetchdata process = new fetchdata(nom.replaceAll(" ","%20"));
+            fetchdata process = new fetchdata(adapter,nom.replaceAll(" ","%20"));
             process.execute();
         }
 

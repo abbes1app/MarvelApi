@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ListMarvel">
+    tools:context=".Fragment.ListMarvel">
 
 
 <ImageView
@@ -39,11 +39,12 @@
 
 </LinearLayout>
 
+
    <ListView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:layout_gravity="start"
-       android:background="#FFFFFF"
+       android:background="@drawable/back"
        android:id="@+id/listMarvel"
         />
 
