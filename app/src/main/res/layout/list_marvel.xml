@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/back"
     tools:context=".Fragment.ListMarvel">
 
 
@@ -15,10 +16,6 @@
     android:src="@drawable/task_manager"
     android:visibility="gone"
      />
-
-
-
-
 
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout
@@ -53,14 +50,13 @@
 
 </LinearLayout>
 
-
    <ListView
        android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:layout_gravity="start"
-       android:background="@drawable/back"
+       android:layout_height="wrap_content"
        android:id="@+id/listMarvel"
         />
+
+
 
 
 </LinearLayout>

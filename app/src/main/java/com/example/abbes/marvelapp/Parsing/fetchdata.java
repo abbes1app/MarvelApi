@@ -58,7 +58,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
                         url = new URL("https://gateway.marvel.com:443/v1/public/characters?offset="+offset+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
                     }
                     else {
-                        url = new URL("https://gateway.marvel.com:443/v1/public/characters?name="+nom+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
+                        url = new URL("https://gateway.marvel.com:443/v1/public/characters?nameStartsWith="+nom+"&ts=1&apikey=007d6474b1b13067477db04343c0c385&hash=51758a84f6fadf388b4b02cc9dc0c702");
 
                     }
 

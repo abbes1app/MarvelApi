@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +36,8 @@ public  ImageView NoWifi ;
 public ProgressBar load;
 public  ListView data ;
 public  Bundle bundle ;
-
+private View loadingView;
+private EditText  ChampRecherche ;
     public ListMarvel() {
         // Required empty public constructor
     }
@@ -45,6 +48,8 @@ public  Bundle bundle ;
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.list_marvel, container, false);
+        loadingView = inflater.inflate(R.layout.footerload,container,false);
+
         getActivity().setTitle("Accueil");
         data = v.findViewById(R.id.listMarvel);
         NoWifi = v.findViewById(R.id.Nowifi);
@@ -73,7 +78,7 @@ public  Bundle bundle ;
 
 
         // Recherche par Nom
-        final EditText  ChampRecherche = v.findViewById(R.id.search);
+       ChampRecherche = v.findViewById(R.id.search);
 
         ChampRecherche.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -91,6 +96,33 @@ public  Bundle bundle ;
                 return true;
                 }
                 return false;
+            }
+        });
+
+        ChampRecherche.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                bsearch = true ;
+                MarvelAdapter.clear();
+                fetchdata process = new fetchdata(adapter,ChampRecherche.getText().toString());
+                process.execute();
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            if(ChampRecherche.getText().toString().matches("")){
+                MarvelAdapter.clear();
+                fetchdata process = new fetchdata(adapter);
+                process.execute();
+}
             }
         });
 
@@ -129,8 +161,8 @@ public  Bundle bundle ;
                     fetchdata.offset = fetchdata.offset + 20 ;
                     fetchdata process = new fetchdata(adapter);
                     process.execute();
-                    Chargement = true ;
-
+                    Chargement = true ; 
+                    loading();
                 }
 
             }
@@ -139,6 +171,10 @@ public  Bundle bundle ;
 
     return v ;
 
+    }
+
+    private void loading() {
+        data.addFooterView(loadingView);
     }
 
     private void fermerclavier() {

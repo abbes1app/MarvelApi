@@ -1,5 +1,6 @@
 package com.example.abbes.marvelapp;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,7 +12,9 @@ public class Lancement extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lancement);
 
-final  Intent i = new Intent(this,MainActivity.class);
+
+
+        final  Intent i = new Intent(this,MainActivity.class);
         Thread logoTimer = new Thread() {
             public void run() {
                 try {

@@ -17,7 +17,7 @@
         <activity
             android:name=".Lancement"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppThemee">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
