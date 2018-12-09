@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 
 import com.example.abbes.marvelapp.Adapter.MarvelAdapter;
 import com.example.abbes.marvelapp.ClassObject.MarvelModel;
+import com.example.abbes.marvelapp.Fragment.ListMarvel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
     public static int count = 0;
     public static int offset = 0;
     public static int limit = 0;
+
 
 
 
@@ -147,6 +149,11 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
+
+            ModelList = new ArrayList<>() ;
+            MarvelModel md = new MarvelModel();
+            md.setName("");
+            ModelList.add((md));
 
 
 

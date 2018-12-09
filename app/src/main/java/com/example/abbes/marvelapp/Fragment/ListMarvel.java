@@ -38,6 +38,7 @@ public  ListView data ;
 public  Bundle bundle ;
 private View loadingView;
 private EditText  ChampRecherche ;
+
     public ListMarvel() {
         // Required empty public constructor
     }
@@ -54,6 +55,7 @@ private EditText  ChampRecherche ;
         data = v.findViewById(R.id.listMarvel);
         NoWifi = v.findViewById(R.id.Nowifi);
         load = v.findViewById(R.id.load);
+
         fetchdata.offset = 0 ;
 
         final MarvelAdapter adapter = new MarvelAdapter(AppContext.getContext());
@@ -62,7 +64,6 @@ private EditText  ChampRecherche ;
 
         // Liste vide au lancement
         data.setAdapter(adapter);
-
         // Verification de La Connexion Reseau
         if(TestInternet(AppContext.getContext())) {
 
@@ -70,11 +71,15 @@ private EditText  ChampRecherche ;
             process.execute();
 
         }
+
         else{
-            Toast.makeText(AppContext.getContext(),
-                    "Verifier VOtre Connexion",Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),
+                    "Verifier Votre Connexion",Toast.LENGTH_LONG).show();
             NoWifi.setVisibility(View.VISIBLE);
         }
+
+
+
 
 
         // Recherche par Nom
