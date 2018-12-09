@@ -8,13 +8,17 @@
     tools:context=".Fragment.ListMarvel">
 
 
-<ImageView
+    <ImageView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/Nowifi"
     android:src="@drawable/task_manager"
     android:visibility="gone"
      />
+
+
+
+
 
     <!-- TODO: Update blank fragment layout -->
 <LinearLayout

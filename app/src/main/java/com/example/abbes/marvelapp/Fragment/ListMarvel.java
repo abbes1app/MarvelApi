@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.abbes.marvelapp.Autre.AppContext;
@@ -30,6 +31,7 @@ public class ListMarvel extends Fragment {
 public static boolean Chargement = false ;
 public static boolean bsearch = false ;
 public  ImageView NoWifi ;
+public ProgressBar load;
 public  ListView data ;
 public  Bundle bundle ;
 
@@ -43,12 +45,15 @@ public  Bundle bundle ;
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.list_marvel, container, false);
-
+        getActivity().setTitle("Accueil");
         data = v.findViewById(R.id.listMarvel);
         NoWifi = v.findViewById(R.id.Nowifi);
+        load = v.findViewById(R.id.load);
         fetchdata.offset = 0 ;
 
         final MarvelAdapter adapter = new MarvelAdapter(AppContext.getContext());
+
+
 
         // Liste vide au lancement
         data.setAdapter(adapter);

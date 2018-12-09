@@ -55,6 +55,7 @@ public class DescriptionModel extends Fragment {
 
         db = new DBHelper(AppContext.getContext());
 
+        getActivity().setTitle("Description");
         //Pour savoir d'ou in vient
         if (this.getArguments().getString("nom") != null) {
             i = Integer.parseInt(this.getArguments().getString("nom"));
@@ -160,6 +161,8 @@ public class DescriptionModel extends Fragment {
 
         return rootview ;
     }
+
+
 
     // fonction Animation pour le RecycleView
 

@@ -33,6 +33,7 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
     public static int limit = 0;
 
 
+
     public fetchdata(MarvelAdapter adapter,String nom){
 
         this.adapter = adapter ;
@@ -146,6 +147,9 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
+
+
+
         }
 
 

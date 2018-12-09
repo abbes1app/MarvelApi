@@ -1,7 +1,10 @@
 package com.example.abbes.marvelapp;
 
 
+import android.app.ActionBar;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,12 +25,15 @@ import com.example.abbes.marvelapp.Parsing.fetchdata;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  {
+
 
     private List<ItemList> MenuGauche;
     private ListView listMenuGauche;
     private DrawerLayout MenuGaucheLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+
+
 
 
     @Override
@@ -52,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection ConstantConditions
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#000000")));
 
-
-        listMenuGauche.setItemChecked(0, true);
+     //   listMenuGauche.setItemChecked(0, true);
 
         MenuGaucheLayout.closeDrawer(listMenuGauche);
 
@@ -69,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
                 setTitle(MenuGauche.get(position).getTitle());
 
-                listMenuGauche.setItemChecked(position, true);
+               listMenuGauche.setItemChecked(position, false);
 
                 //Replace fragment
                 replaceFragment(position);
@@ -112,17 +118,20 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
+
     @Override
     public void onBackPressed() {
 
-fetchdata.offset = 0 ;
+        fetchdata.offset = 0 ;
 
 
         if (ListMarvel.bsearch) {
             //additional code
             replaceFragment(0);
-            Toast.makeText(getApplicationContext(),"je clique",Toast.LENGTH_LONG).show();
             ListMarvel.bsearch = false ;
+        }
+        else if(getTitle().equals("Accueil")) {
+            finish();
         }
         else {
             super.onBackPressed();

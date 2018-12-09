@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.abbes.marvelapp.Fragment.ListMarvel;
 import com.example.abbes.marvelapp.ClassObject.MarvelModel;
 import com.example.abbes.marvelapp.Autre.PicassoClient;
+import com.example.abbes.marvelapp.Parsing.fetchdata;
 import com.example.abbes.marvelapp.R;
 
 import java.util.ArrayList;
@@ -82,11 +83,17 @@ public class MarvelAdapter extends BaseAdapter {
 
     public void loadlist(List<MarvelModel> list) {
 
-        mdl.addAll(list);
 
-        notifyDataSetChanged();
 
-        ListMarvel.Chargement = false ;
+            mdl.addAll(list);
+
+            notifyDataSetChanged();
+
+            ListMarvel.Chargement = false ;
+
+
+
+
 
 
     }
