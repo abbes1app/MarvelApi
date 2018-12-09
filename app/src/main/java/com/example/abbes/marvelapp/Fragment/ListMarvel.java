@@ -1,6 +1,7 @@
 package com.example.abbes.marvelapp.Fragment;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public  Bundle bundle ;
 private View loadingView;
 private EditText  ChampRecherche ;
 
+
     public ListMarvel() {
         // Required empty public constructor
     }
@@ -49,6 +51,7 @@ private EditText  ChampRecherche ;
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.list_marvel, container, false);
+
         loadingView = inflater.inflate(R.layout.footerload,container,false);
 
         getActivity().setTitle("Accueil");
@@ -182,7 +185,7 @@ private EditText  ChampRecherche ;
                     fetchdata process = new fetchdata(adapter);
                     process.execute();
                     Chargement = true ; 
-                    loading();
+        //            loading();
                 }
 
             }
@@ -193,8 +196,11 @@ private EditText  ChampRecherche ;
 
     }
 
+    // ça ne marche pas avec l'api 26 ! 
+
     private void loading() {
         data.addFooterView(loadingView);
+
     }
 
     private void fermerclavier() {
