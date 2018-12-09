@@ -83,13 +83,18 @@ public class MarvelAdapter extends BaseAdapter {
 
     public void loadlist(List<MarvelModel> list) {
 
+for(int i = 0 ; i<list.size(); i++){
 
+    if(getIndexByname(list.get(i).getName())== -1){
+        mdl.addAll(list);
 
-            mdl.addAll(list);
+        notifyDataSetChanged();
 
-            notifyDataSetChanged();
+        ListMarvel.Chargement = false ;
+}
 
-            ListMarvel.Chargement = false ;
+}
+
 
 
 

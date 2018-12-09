@@ -85,6 +85,8 @@ private EditText  ChampRecherche ;
         // Recherche par Nom
        ChampRecherche = v.findViewById(R.id.search);
 
+
+
         ChampRecherche.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if ((event.getAction() == KeyEvent.ACTION_DOWN)
@@ -123,12 +125,25 @@ private EditText  ChampRecherche ;
             @Override
             public void afterTextChanged(Editable editable) {
 
-            if(ChampRecherche.getText().toString().matches("")){
+                fetchdata process ;
+
                 MarvelAdapter.clear();
-                fetchdata process = new fetchdata(adapter);
+
+                if(ChampRecherche.getText().toString().matches("")){
+
+                     process = new fetchdata(adapter);
+
+                }
+                else{
+
+                     process = new fetchdata(adapter,ChampRecherche.getText().toString().replace(" ","%20"));
+
+                }
+
                 process.execute();
-}
             }
+
+
         });
 
 

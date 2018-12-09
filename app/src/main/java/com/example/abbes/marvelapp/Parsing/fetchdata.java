@@ -149,7 +149,6 @@ public class fetchdata extends AsyncTask<Void,Void,Void> {
 
         } catch (IOException | JSONException e) {
             e.printStackTrace();
-
             ModelList = new ArrayList<>() ;
             MarvelModel md = new MarvelModel();
             md.setName("");
