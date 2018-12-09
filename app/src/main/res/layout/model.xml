@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/list_item_style"
     android:orientation="horizontal">
 
     <ImageView
@@ -12,13 +11,20 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/nameTxt"
-        android:textSize="15dp"
-        android:textColor="#000000"
-        android:paddingTop="13dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameTxt"
+            android:textSize="20sp"
+            android:textStyle="italic"
+            android:textColor="#000000"
+            android:gravity="center"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
 </LinearLayout>

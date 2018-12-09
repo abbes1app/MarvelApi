@@ -13,6 +13,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,11 @@ public class DescriptionModel extends Fragment {
 
         Nom.setText(MarvelAdapter.getMdl().get(i).getName());
         description.setText(MarvelAdapter.getMdl().get(i).getDescription());
+        if(description.getText().equals("")){
+            description.setText("Pas de description disponible pour le moment");
+            ScrollView s = rootview.findViewById(R.id.taille);
+            s.getLayoutParams().height = 200 ;
+        }
 
         PicassoClient.downloadImage(AppContext.getContext(),MarvelAdapter.getMdl().get(i).getUrlImage(),image);
 

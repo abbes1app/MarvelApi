@@ -16,9 +16,11 @@ public class MyDescriptionRecycleViewAdapter extends RecyclerView.Adapter<MyDesc
     private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
+    private Context context ;
 
     // data is passed into the constructor
     public MyDescriptionRecycleViewAdapter(Context context, List<String> data) {
+        this.context = context ;
         this.mInflater = LayoutInflater.from(context);
         this.mData = data;
     }
@@ -26,7 +28,10 @@ public class MyDescriptionRecycleViewAdapter extends RecyclerView.Adapter<MyDesc
     // inflates the row layout from xml when needed
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = mInflater.inflate(R.layout.recycleview_row, parent, false);
+
+
         return new ViewHolder(view);
     }
 
