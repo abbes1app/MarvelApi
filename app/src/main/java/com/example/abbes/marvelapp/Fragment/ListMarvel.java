@@ -109,7 +109,7 @@ private EditText  ChampRecherche ;
             }
         });
 
-        // A revoir Recherche "NameStartWith"
+        // A revoir Recherche "NameStartWith" ça marche mais pas a la perfection
 
         /*
 
