@@ -85,10 +85,10 @@ private EditText  ChampRecherche ;
 
 
 
-        // Recherche par Nom
        ChampRecherche = v.findViewById(R.id.search);
 
 
+        // Recherche par Nom
 
         ChampRecherche.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -108,6 +108,10 @@ private EditText  ChampRecherche ;
                 return false;
             }
         });
+
+        // A revoir Recherche "NameStartWith"
+
+        /*
 
         ChampRecherche.addTextChangedListener(new TextWatcher() {
             @Override
@@ -148,6 +152,8 @@ private EditText  ChampRecherche ;
 
 
         });
+
+        */
 
 
         // Quand on clique sur un Item pour voir les details
@@ -196,11 +202,10 @@ private EditText  ChampRecherche ;
 
     }
 
-    // ça ne marche pas avec l'api 26 ! 
+    // ça ne marche pas avec l'api 26 !
 
     private void loading() {
         data.addFooterView(loadingView);
-
     }
 
     private void fermerclavier() {
